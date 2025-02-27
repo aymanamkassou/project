@@ -55,7 +55,7 @@ interface AlgorithmStep {
   currentNode: string;
   visitedNodes: string[];
   frontier: string[];
-  distances: Record<string, number>;
+  distances: Record<string, number | "∞">;
   previousNodes: Record<string, string>;
 }
 
@@ -101,9 +101,10 @@ export default function Home() {
         }),
       });
       const result = await response.json();
-      setPathResult(result);
-      console.log(pathResult);
+      const sanitizedResult = JSON.parse(JSON.stringify(result).replace(/"\s*:\s*inf/g, ': null'));
+      setPathResult(sanitizedResult);
       setCurrentStepIndex(0);
+      setIsAnimating(true);
     } catch (error) {
       toast.error("Failed to calculate route");
     } finally {

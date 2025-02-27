@@ -35,6 +35,20 @@ interface Edge {
   distance: number;
 }
 
+interface PathResult {
+  path: string[];
+  totalDistance: number;
+  steps: AlgorithmStep[];
+}
+
+interface AlgorithmStep {
+  currentNode: string;
+  visitedNodes: string[];
+  frontier: string[];
+  distances: Record<string, number | "∞">;
+  previousNodes: Record<string, string>;
+}
+
 interface AirportMapProps {
   nodes: Node[];
   edges: Edge[];
@@ -59,13 +73,15 @@ export default function AirportMap({
       iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
       shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
     });
-  }, []);
+    console.log('Current path result:', pathResult);
+    console.log('Current step:', currentStep);
+  }, [[pathResult, currentStep]]);
 
   const getNodeColor = (node: Node) => {
     if (node.id === selectedStart) return "green";
     if (node.id === selectedEnd) return "red";
-    if (currentStep?.visitedNodes.includes(node.id)) return "blue";
-    if (currentStep?.frontier.includes(node.id)) return "orange";
+    if (currentStep?.visitedNodes?.includes(node.id)) return "blue";
+    if (currentStep?.frontier?.includes(node.id)) return "orange";
     return node.type === 0 ? "gray" : "#6b7280";
   };
 
@@ -89,6 +105,7 @@ export default function AirportMap({
 
   return (
     <MapContainer
+      key={pathResult? pathResult.totalDistance : 'initial'}
       center={[31.7917, -7.0926]} // Center of Morocco
       zoom={6}
       className="h-[600px] w-full rounded-lg"
@@ -166,6 +183,7 @@ export default function AirportMap({
             />
           )}
         </div>
+        
       ))}
     </MapContainer>
   );
