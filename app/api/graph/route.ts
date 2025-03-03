@@ -1,6 +1,6 @@
 export async function GET() {
     try {
-      const backendResponse = await fetch('http://35.180.209.123:3001/api/graph');
+      const backendResponse = await fetch('http://13.36.148.227:3001/api/graph');
       const data = await backendResponse.json();
       
       return new Response(JSON.stringify(data), {
