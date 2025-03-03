@@ -75,7 +75,7 @@ export default function Home() {
 
   const fetchGraphData = async () => {
     try {
-      const response = await fetch("http://35.180.209.123:3001/api/graph");
+      const response = await fetch("/api/graph");
       const data = await response.json();
       setGraphData(data);
     } catch (error) {
@@ -88,10 +88,10 @@ export default function Home() {
       toast.error("Please select both airports");
       return;
     }
-
+  
     setIsLoading(true);
     try {
-      const response = await fetch("http://35.180.209.123:3001/api/find-path", {
+      const response = await fetch("/api/path", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -100,13 +100,21 @@ export default function Home() {
           algorithm,
         }),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
       const result = await response.json();
-      const sanitizedResult = JSON.parse(JSON.stringify(result).replace(/"\s*:\s*inf/g, ': null'));
+      const sanitizedResult = JSON.parse(
+        JSON.stringify(result).replace(/"\s*:\s*inf/g, ': null')
+      );
+      
       setPathResult(sanitizedResult);
       setCurrentStepIndex(0);
       setIsAnimating(true);
     } catch (error) {
-      toast.error("Failed to calculate route");
+      toast.error(error instanceof Error ? error.message : "Failed to calculate route");
     } finally {
       setIsLoading(false);
     }
