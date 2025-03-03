@@ -75,7 +75,7 @@ export default function Home() {
 
   const fetchGraphData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/graph");
+      const response = await fetch("http://35.180.209.123:3001/api/graph");
       const data = await response.json();
       setGraphData(data);
     } catch (error) {
@@ -91,7 +91,7 @@ export default function Home() {
 
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3001/api/find-path", {
+      const response = await fetch("http://35.180.209.123:3001/api/find-path", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
