@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    const backendResponse = await fetch('http://35.180.209.123:3001/api/graph');
+    const backendResponse = await fetch('http://13.36.148.227:3001/api/graph');
     const data = await backendResponse.json();
     
     // Set CORS headers

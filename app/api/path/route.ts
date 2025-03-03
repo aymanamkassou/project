@@ -2,7 +2,7 @@ export async function POST(request: Request) {
     try {
       const body = await request.json();
       
-      const backendResponse = await fetch('http://35.180.209.123:3001/api/find-path', {
+      const backendResponse = await fetch('http://13.36.148.227:3001/api/find-path', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
