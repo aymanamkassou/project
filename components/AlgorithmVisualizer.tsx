@@ -5,6 +5,50 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
 
+// Base Node interface matching C++ Node class
+interface BaseNode {
+  id: string;
+  lat: number;
+  lng: number;
+  type: number; // 0 for airports, 1 for waypoints
+}
+
+// Airport interface extending BaseNode
+interface Airport extends BaseNode {
+  name: string;
+  city: string;
+  country: string;
+  elevation: number;
+}
+
+// Waypoint interface extending BaseNode
+interface Waypoint extends BaseNode {
+  countryCode: string;
+  countryName: string;
+}
+
+type Node = Airport | Waypoint;
+
+interface Edge {
+  from: string;
+  to: string;
+  distance: number;
+}
+
+interface PathResult {
+  path: string[];
+  totalDistance: number;
+  steps: AlgorithmStep[];
+}
+
+interface AlgorithmStep {
+  currentNode: string;
+  visitedNodes: string[];
+  frontier: string[];
+  distances: Record<string, number | "∞">;
+  previousNodes: Record<string, string>;
+}
+
 interface AlgorithmVisualizerProps {
   pathResult: PathResult;
   currentStepIndex: number;
