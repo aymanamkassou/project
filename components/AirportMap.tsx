@@ -75,7 +75,7 @@ export default function AirportMap({
     });
     console.log('Current path result:', pathResult);
     console.log('Current step:', currentStep);
-  }, [[pathResult, currentStep]]);
+  }, [[pathResult, currentStep]]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getNodeColor = (node: Node) => {
     if (node.id === selectedStart) return "green";

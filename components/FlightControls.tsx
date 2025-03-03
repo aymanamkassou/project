@@ -111,7 +111,7 @@ export default function FlightControls({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="dijkstra">Dijkstra's Algorithm</SelectItem>
+              <SelectItem value="dijkstra">Dijkstras Algorithm</SelectItem>
               <SelectItem value="bfs">Breadth-First Search</SelectItem>
             </SelectContent>
           </Select>
